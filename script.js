@@ -1102,3 +1102,4 @@ const groupedDogs = Object.groupBy(ownersTooMuch, dog => {
 });
 
 console.log(groupedDogs);
+console.log('yuh');
