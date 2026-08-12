@@ -1008,7 +1008,7 @@ const calcRecommendedFood =
   dogs.forEach(dog => {
     const recFood = dog.weight ** 0.75 * 28;
 
-    dog.recFood = recFood;
+    dog.recFood = Math.floor(recFood);
 
     console.log('1.', dog);
   });
@@ -1078,10 +1078,10 @@ console.log('7.', eatingOkayArr);
 
 // 8.
 
-const ownersExactFood = dogs.filter(dog => dog.curFood === dog.recFood);
-console.log(ownersExactFood);
+// const ownersExactFood = dogs.filter(dog => dog.curFood === dog.recFood);
+// console.log(ownersExactFood);
 
-const allOwners = [ownersTooMuch, ownersTooLittle, ownersExactFood];
+// const allOwners = [ownersTooMuch, ownersTooLittle, ownersExactFood];
 
 // const groupedDogs = allOwners.forEach(arr =>
 //   Object.groupBy(arr, dog => {
@@ -1094,12 +1094,30 @@ const allOwners = [ownersTooMuch, ownersTooLittle, ownersExactFood];
 
 // console.log(groupedDogs);
 
-const groupedDogs = Object.groupBy(ownersTooMuch, dog => {
-  if (dog.curFood > dog.recFood) 'too much';
-  else if (dog.curFood < dog.recFood) 'too little';
+const groupedDogsByPortion = Object.groupBy(dogs, dog => {
+  if (dog.curFood > dog.recFood) return 'too much';
+  else if (dog.curFood < dog.recFood) return 'too little';
   else if (dog.curFood > dog.recFood * 0.9 && dog.curFood < dog.recFood * 1.1)
-    'okay';
+    return 'exact';
 });
 
-console.log(groupedDogs);
-console.log('yuh');
+console.log('8.', groupedDogsByPortion);
+// console.log('yuh');
+
+// 9.
+const groupedDogsByOwners = Object.groupBy(dogs, dog => {
+  return `${dog.owners.length} owner${dog.owners.length > 1 ? 's' : ''}`;
+});
+
+console.log('9.', groupedDogsByOwners);
+
+// 10.
+const sortedDogsByRecFood = dogs.toSorted((a, b) => a.recFood - b.recFood);
+console.log(sortedDogsByRecFood);
+
+// const groupedDogsByRecFood =
+// const sortedDogsByRecFood = Object.groupBy(dogs, dog => {
+//   return dog.recFood;
+// }); /*.toSorted((a, b) => a - b)*/
+
+// console.log(sortedDogsByRecFood);
